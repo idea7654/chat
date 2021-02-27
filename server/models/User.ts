@@ -3,13 +3,21 @@ import mongoose from "mongoose";
 interface IUser extends mongoose.Document {
   email: string | undefined;
   password: string | undefined;
-  admin: boolean;
+  friends: string[] | [];
+  nickname: string;
 }
 
 const userSchema: mongoose.Schema = new mongoose.Schema({
-  email: String,
+  email: {
+    type: String,
+    unique: true,
+  },
   password: String,
-  admin: { type: Boolean, default: false },
+  friends: {
+    type: Array,
+    default: [],
+  },
+  nickname: String,
 });
 
 const User = mongoose.model<IUser>("User", userSchema);

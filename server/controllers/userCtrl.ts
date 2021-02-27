@@ -7,8 +7,7 @@ export interface RequestCustom extends Request {
 }
 
 function Register(req: Request, res: Response) {
-  const { email, password } = req.body;
-  let newUser: any = null;
+  const { email, password, nickName } = req.body;
   function create(user: any) {
     if (user) {
       throw new Error("email exists");
@@ -16,26 +15,15 @@ function Register(req: Request, res: Response) {
       return User.create({
         email: email,
         password: password,
+        nickname: nickName,
       }).then((res) => {
         console.log(res);
       });
     }
   }
-  function count(user: any) {
-    newUser = user;
-    return User.count({}).exec();
-  }
-  function assign(count: number) {
-    if (count === 1) {
-      return newUser.assignAdmin();
-    } else {
-      return Promise.resolve(false);
-    }
-  }
-  function respond(isAdmin: boolean) {
+  function respond() {
     res.json({
       message: "registered successfully",
-      admin: isAdmin ? true : false,
     });
   }
   function onError(error: any) {
@@ -47,8 +35,6 @@ function Register(req: Request, res: Response) {
     email: email,
   })
     .then(create)
-    .then(count)
-    .then(assign)
     .then(respond)
     .catch(onError);
 }
@@ -66,7 +52,6 @@ function login(req: Request, res: Response) {
           {
             _id: user._id,
             email: user.email,
-            admin: user.admin,
           },
           secret
         );
@@ -98,11 +83,30 @@ function login(req: Request, res: Response) {
     .catch(onError);
 }
 
-function check(req: RequestCustom, res: Response) {
-  res.json({
+async function check(req: RequestCustom, res: Response) {
+  const user = await User.findOne({
+    email: req.decoded.email,
+  });
+  await res.json({
     success: true,
-    info: req.decoded,
+    info: user,
   });
 }
 
-export { Register, login, check };
+async function search(req: Request, res: Response) {
+  const { email } = req.body;
+  const user = await User.findOne({
+    email: email,
+  });
+  if (user) {
+    res.json({
+      user: user,
+    });
+  } else {
+    res.status(403).json({
+      message: "유저를 찾을 수 없습니다",
+    });
+  }
+}
+
+export { Register, login, check, search };

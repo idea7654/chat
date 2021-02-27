@@ -1,13 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-
 export interface RequestCustom extends Request {
   decoded?: any;
 }
 
 function Check(req: RequestCustom, res: Response, next: NextFunction) {
-  const token: any = req.headers["x-access-token"] || req.query.token;
-
+  const token: any = req.headers.authorization || req.query.token;
   // token does not exist
   if (!token) {
     return res.status(403).json({
