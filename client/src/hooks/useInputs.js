@@ -5,6 +5,7 @@ const useInputs = () => {
     email: "",
     password: "",
     nickName: "",
+    message: "",
   });
 
   function onChange(e) {

@@ -20,6 +20,16 @@ const FooterComponent = ({ history }) => {
       history.push("/login");
     }
   }
+
+  function redirectSetting(e) {
+    e.preventDefault();
+    const sessionToken = window.sessionStorage.getItem("token");
+    if (sessionToken) {
+      history.push("/setting");
+    } else {
+      history.push("/login");
+    }
+  }
   return (
     <div>
       <div className="flex flex-row items-center justify-around mt-4 bg-gray-100 p-4">
@@ -37,7 +47,7 @@ const FooterComponent = ({ history }) => {
             />
           </svg>
         </div>
-        <div className="flex text-gray-600">
+        <div className="flex text-gray-600" onClick={redirectSetting}>
           <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"

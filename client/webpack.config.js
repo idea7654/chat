@@ -13,6 +13,11 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
+  resolve: {
+    alias: {
+      "@Context": path.resolve(__dirname, "src/context/"),
+    },
+  },
   mode: "development",
   module: {
     rules: [

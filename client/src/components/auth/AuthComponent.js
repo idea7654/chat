@@ -25,7 +25,7 @@ const AuthComponent = ({ history, type }) => {
       axios
         .post("http://localhost:5000/auth/register", body)
         .then((res) => {
-          history.push("/");
+          history.push("/login");
         })
         .catch((err) => {
           alert("오류입니다!!");
@@ -37,7 +37,7 @@ const AuthComponent = ({ history, type }) => {
     const { token } = res.data;
     axios.defaults.headers.common["Authorization"] = token;
     window.sessionStorage.setItem("token", res.data.token);
-    history.push("/");
+    history.push("/list");
   }
   return (
     <div>

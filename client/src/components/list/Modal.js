@@ -8,9 +8,14 @@ const Modal = ({ setModal, dispatch }) => {
     let body = {
       email: Form.email,
     };
-    axios.post("http://localhost:5000/friend/search", body).then((res) => {
-      setResult(res.data.user);
-    });
+    axios
+      .post("http://localhost:5000/friend/search", body)
+      .then((res) => {
+        setResult(res.data.user);
+      })
+      .catch((err) => {
+        alert("없는 유저입니다!");
+      });
   }
 
   function addFriend() {
@@ -22,6 +27,7 @@ const Modal = ({ setModal, dispatch }) => {
         type: "ADD_FRIEND",
         value: res.data.user.friends[res.data.user.friends.length - 1].nickName,
       });
+      setModal(false);
     });
   }
   return (

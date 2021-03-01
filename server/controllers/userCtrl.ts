@@ -109,4 +109,21 @@ async function search(req: Request, res: Response) {
   }
 }
 
-export { Register, login, check, search };
+function update(req: RequestCustom, res: Response) {
+  const user = req.decoded;
+  console.log(req.file, typeof (req.file as any).location);
+  User.findOne({ _id: user._id }, (err: any, data: any) => {
+    data.message = req.body.message;
+    data.nickname = req.body.nickName;
+    data.image = (req.file as any).location.toString();
+    data.save();
+  });
+  return res.json({
+    success: true,
+    nickname: req.body.nickName,
+    message: req.body.message,
+    image: (req.file as any).location.toString(),
+  });
+}
+
+export { Register, login, check, search, update };

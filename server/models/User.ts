@@ -5,6 +5,8 @@ interface IUser extends mongoose.Document {
   password: string | undefined;
   friends: string[] | [];
   nickname: string;
+  image: string | undefined;
+  message: any;
 }
 
 const userSchema: mongoose.Schema = new mongoose.Schema({
@@ -18,6 +20,14 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
     default: [],
   },
   nickname: String,
+  image: {
+    type: String,
+    default: "",
+  },
+  message: {
+    type: String,
+    default: "상태메시지가 설정되지 않았습니다.",
+  },
 });
 
 const User = mongoose.model<IUser>("User", userSchema);

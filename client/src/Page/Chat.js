@@ -1,9 +1,11 @@
 import React from "react";
+import ChatDetail from "../components/chat/ChatDetail";
 
-const Message = () => {
+const Chat = () => {
   return (
     <div>
-      <h2 className="flex flex-row items-center justify-between mt-2">
+      <ChatDetail />
+      {/* <h2 className="flex flex-row items-center justify-between mt-2">
         <span className="font-bold text-xl text-gray-900">Messages</span>
         <a href="#" className="text-gray-600 hover:text-gray-700">
           <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
@@ -52,7 +54,6 @@ const Message = () => {
             <a href="#" className="flex rounded-full w-16 h-16">
               <img
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=128&h=128&q=60&facepad=1.5"
-                alt
                 className="w-full h-full rounded-full"
               />
             </a>
@@ -62,9 +63,9 @@ const Message = () => {
             <p className="text-sm text-gray-600">Hey, how are you today?</p>
           </div>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 };
 
-export default Message;
+export default Chat;

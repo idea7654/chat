@@ -1,19 +1,10 @@
-import React, { useEffect, useReducer, useState } from "react";
-import axios from "axios";
-import FriendReducer from "../../reducer/FriendReducer";
-import ListDetail from "./ListDetail";
+import React, { useEffect, useReducer, useState, useContext } from "react";
+import ListDetail from "./detail/ListDetail";
 import Modal from "./Modal";
+import UserContext from "../../context/UserContext";
 const ListComponent = () => {
-  const [friendList, dispatch] = useReducer(FriendReducer, []);
+  const [User, dispatch] = useContext(UserContext);
   const [showModal, setModal] = useState(false);
-  useEffect(() => {
-    axios.get("http://localhost:5000/auth/check").then((res) => {
-      dispatch({
-        type: "GET_LIST",
-        value: res.data.info.friends,
-      });
-    });
-  }, []);
   function handleAdd() {
     setModal(true);
   }
@@ -52,10 +43,11 @@ const ListComponent = () => {
         className="flex flex-col mt-4 space-y-2 overflow-y-auto"
         style={{ height: "400px" }}
       >
-        {console.log(friendList)}
-        {friendList.map((data) => {
-          return <ListDetail data={data} />;
-        })}
+        {User.friends
+          ? User.friends.map((data, index) => {
+              return <ListDetail key={index} data={data} />;
+            })
+          : ""}
       </ul>
       {showModal ? <Modal setModal={setModal} dispatch={dispatch} /> : ""}
     </div>
