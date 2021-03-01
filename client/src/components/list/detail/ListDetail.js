@@ -4,7 +4,6 @@ import FriendInfo from "./FriendInfo";
 const ListDetail = ({ data }) => {
   const [User] = useContext(UserContext);
   const [FriendModal, setFriendModal] = useState(false);
-
   function handleClick(e) {
     e.stopPropagation();
     setFriendModal(true);
@@ -27,7 +26,11 @@ const ListDetail = ({ data }) => {
           {User.message}
         </div>
       </div>
-      {FriendModal ? <FriendInfo setFriendModal={setFriendModal} /> : ""}
+      {FriendModal ? (
+        <FriendInfo setFriendModal={setFriendModal} data={data} />
+      ) : (
+        ""
+      )}
     </li>
   );
 };

@@ -1,11 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import UserContext from "@Context/UserContext";
-const FriendInfo = ({ setFriendModal }) => {
+import axios from "axios";
+const FriendInfo = ({ setFriendModal, data }) => {
   const [User] = useContext(UserContext);
+  const [Friend, setFriend] = useState(null);
   function handleClick(e) {
     e.stopPropagation();
     setFriendModal(false);
   }
+
+  function startChat(e) {
+    e.stopPropagation();
+    const body = {
+      user: User,
+      friend: data,
+    };
+    axios.post("http://localhost:5000/room/create", body).then((res) => {
+      console.log(res);
+    });
+  }
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:5000/friend/?search=${encodeURIComponent(
+          data.nickName
+        )}`
+      )
+      .then((res) => {
+        setFriend(res.data.user);
+      });
+  }, []);
   return (
     <div>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -30,21 +55,25 @@ const FriendInfo = ({ setFriendModal }) => {
                 <div className="flex justify-center">
                   <div className="relative flex-shrink-0">
                     <a className="flex rounded-full w-32 h-32 mb-6">
-                      <img
-                        src={User.image}
-                        className="w-full h-full rounded-full"
-                      />
+                      {Friend ? (
+                        <img
+                          src={Friend.image}
+                          className="w-full h-full rounded-full"
+                        />
+                      ) : (
+                        ""
+                      )}
                     </a>
                   </div>
                 </div>
                 <div className="flex justify-center mb-3 font-bold">
-                  <div>{User.nickname}</div>
+                  <div>{Friend ? Friend.nickname : ""}</div>
                 </div>
                 <div className="flex justify-center text-sm text-gray-600 mb-10">
-                  <div>{User.message}</div>
+                  <div>{Friend ? Friend.message : ""}</div>
                 </div>
                 <div className="flex justify-between mx-16 mb-10">
-                  <div className="w-12 h-12">
+                  <div className="w-12 h-12" onClick={startChat}>
                     <img src="../../../../public/chat.png" />
                   </div>
                   <div className="w-12 h-12">

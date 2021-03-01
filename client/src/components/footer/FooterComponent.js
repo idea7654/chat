@@ -15,7 +15,7 @@ const FooterComponent = ({ history }) => {
     e.preventDefault();
     const sessionToken = window.sessionStorage.getItem("token");
     if (sessionToken) {
-      history.push("/message");
+      history.push("/chat");
     } else {
       history.push("/login");
     }

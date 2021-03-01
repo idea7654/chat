@@ -39,4 +39,30 @@ function addFriend(req: RequestCustom, res: Response) {
     .catch(onError);
 }
 
-export { addFriend };
+function friendSearch(req: Request, res: Response) {
+  const nickName: any = decodeURIComponent(req.query.search as any);
+  function search(user: any) {
+    if (user) {
+      return res.json({
+        user,
+      });
+    } else {
+      throw new Error("없는 유저입니다!");
+    }
+  }
+
+  function onError(err: any) {
+    res.status(409).json({
+      success: false,
+      message: err,
+    });
+  }
+
+  User.findOne({
+    nickname: nickName,
+  })
+    .then(search)
+    .catch(onError);
+}
+
+export { addFriend, friendSearch };

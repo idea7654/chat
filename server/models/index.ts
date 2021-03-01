@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import User from "./User";
+import Room from "./Room";
 const MONGO_URI: any = process.env.MONGO_URI;
 module.exports = () => {
   function connect(): void {
     let connection = mongoose.connect(
       MONGO_URI,
       {
-        dbName: "user",
+        dbName: "ChattingApp",
       },
       (error) => {
         if (error) {
@@ -20,4 +21,5 @@ module.exports = () => {
   connect();
   mongoose.connection.on("disconnected", connect);
   User;
+  Room;
 };

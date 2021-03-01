@@ -4,7 +4,7 @@ interface IUser extends mongoose.Document {
   email: string | undefined;
   password: string | undefined;
   friends: string[] | [];
-  nickname: string;
+  nickname: string | undefined;
   image: string | undefined;
   message: any;
 }
@@ -19,7 +19,10 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  nickname: String,
+  nickname: {
+    type: String,
+    unique: true,
+  },
   image: {
     type: String,
     default: "",
