@@ -1,36 +1,26 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import UserContext from "@Context/UserContext";
 import axios from "axios";
-const FriendInfo = ({ setFriendModal, data }) => {
+import { withRouter } from "react-router-dom";
+const FriendInfo = ({ setFriendModal, Friend, history }) => {
   const [User] = useContext(UserContext);
-  const [Friend, setFriend] = useState(null);
+
   function handleClick(e) {
     e.stopPropagation();
     setFriendModal(false);
   }
-
+  console.log(Friend);
   function startChat(e) {
     e.stopPropagation();
     const body = {
       user: User,
-      friend: data,
+      friend: Friend,
     };
     axios.post("http://localhost:5000/room/create", body).then((res) => {
-      console.log(res);
+      history.push("/chat");
     });
   }
 
-  useEffect(() => {
-    axios
-      .get(
-        `http://localhost:5000/friend/?search=${encodeURIComponent(
-          data.nickName
-        )}`
-      )
-      .then((res) => {
-        setFriend(res.data.user);
-      });
-  }, []);
   return (
     <div>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -90,4 +80,4 @@ const FriendInfo = ({ setFriendModal, data }) => {
   );
 };
 
-export default FriendInfo;
+export default withRouter(FriendInfo);

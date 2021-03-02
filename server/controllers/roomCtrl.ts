@@ -6,12 +6,14 @@ export interface RequestCustom extends Request {
 }
 
 function createRoom(req: RequestCustom, res: Response) {
+  console.log(req.body);
   function create(room: any) {
+    console.log(room);
     if (room.length !== 0) {
       throw new Error("이미 존재하는 채팅방입니다!");
     } else {
       return Room.create({
-        users: [req.body.user.nickname, req.body.friend.nickName],
+        users: [req.body.user.nickname, req.body.friend.nickname],
       })
         .then((Res) => {
           console.log(Res);
@@ -35,7 +37,7 @@ function createRoom(req: RequestCustom, res: Response) {
   }
 
   Room.find({
-    users: { $all: [req.body.user.nickname, req.body.friend.nickName] },
+    users: { $all: [req.body.user.nickname, req.body.friend.nickname] },
   })
     .then(create)
     .then(respond)
@@ -76,4 +78,28 @@ function getRoom(req: RequestCustom, res: Response) {
     .catch(onError);
 }
 
-export { createRoom, getRoom };
+function searchRoom(req: Request, res: Response) {
+  const { users } = req.body;
+  const user: string = users.user.nickname;
+  const aite: string = users.aite.nickname;
+
+  function respond(room: any) {
+    res.json({
+      room,
+    });
+  }
+
+  function onError(err: any) {
+    res.status(409).json({
+      success: false,
+    });
+  }
+
+  Room.find({
+    users: { $all: [user, aite] },
+  })
+    .then(respond)
+    .catch(onError);
+}
+
+export { createRoom, getRoom, searchRoom };

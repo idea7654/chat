@@ -31,11 +31,11 @@ const App = ({ history }) => {
   }, []);
   return (
     <div>
-      <div className="flex items-center justify-center min-h-screen bg-gray-200 py-8">
+      <div className="flex items-center justify-center h-screen bg-gray-200 py-8">
         <div className="flex flex-col w-full max-w-sm shadow bg-white p-4">
           <Route path="/" render={() => <Landing />} exact />
           <Route path="/list" render={() => <List />} />
-          <Route path="/chat" render={() => <Chat />} />
+          <Route path="/chat" render={(match) => <Chat match={match} />} />
           <Route path="/login" render={() => <Login />} />
           <Route path="/register" render={() => <Register />} />
           <Route path="/setting" render={() => <Setting />} />

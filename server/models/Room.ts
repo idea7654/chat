@@ -3,7 +3,7 @@ import autoIncrease from "mongoose-auto-increment";
 interface IRoom extends mongoose.Document {
   id: number;
   password: string | undefined;
-  message: any;
+  message: [];
   users: [];
 }
 
@@ -18,7 +18,10 @@ const roomSchema: mongoose.Schema = new mongoose.Schema(
       default: [],
     },
     password: String,
-    message: String,
+    message: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,

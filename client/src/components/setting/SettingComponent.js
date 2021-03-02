@@ -3,13 +3,12 @@ import UserContext from "@Context/UserContext";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 const SettingComponent = ({ setUpdate, history }) => {
-  const [User, dispatch] = useContext(UserContext);
+  const [User] = useContext(UserContext);
   function handleLogout() {
     axios.defaults.headers.common["Authorization"] = "";
     window.sessionStorage.setItem("token", "");
     history.push("/");
   }
-  console.log(User);
   return (
     <div>
       <div className="flex justify-between">
