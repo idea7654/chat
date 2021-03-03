@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import useInputs from "../../hooks/useInputs";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import UserContext from "@Context/UserContext";
 const AuthComponent = ({ history, type }) => {
+  const [User, dispatch] = useContext(UserContext);
   const [onChange, Form] = useInputs();
   function handleSubmit() {
     if (type === "login") {
@@ -13,8 +15,10 @@ const AuthComponent = ({ history, type }) => {
       axios
         .post("http://localhost:5000/auth/login", body)
         .then(onLoginSuccess)
+        .then(history.push("/"))
         .catch((err) => {
           alert("없는 유저입니다");
+          console.log(err);
         });
     } else {
       let body = {
@@ -36,8 +40,7 @@ const AuthComponent = ({ history, type }) => {
   function onLoginSuccess(res) {
     const { token } = res.data;
     axios.defaults.headers.common["Authorization"] = token;
-    window.sessionStorage.setItem("token", res.data.token);
-    history.push("/list");
+    window.sessionStorage.setItem("token", token);
   }
   return (
     <div>

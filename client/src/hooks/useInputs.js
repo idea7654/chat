@@ -13,7 +13,16 @@ const useInputs = () => {
     setForm((Form) => ({ ...Form, [name]: value }));
   }
 
-  return [onChange, Form];
+  function clear() {
+    setForm({
+      email: "",
+      password: "",
+      nickName: "",
+      message: "",
+    });
+  }
+
+  return [onChange, Form, clear];
 };
 
 export default useInputs;

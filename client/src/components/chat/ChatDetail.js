@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 const ChatDetail = ({ data, history }) => {
   const [User] = useContext(UserContext);
   const [Users, dispatch] = useContext(RoomContext);
+  const [RoomInfo, setRoomInfo] = useState("");
   useEffect(() => {
     function getAite() {
       const aite = data.users.filter((data) => data !== User.nickname);
@@ -31,22 +32,43 @@ const ChatDetail = ({ data, history }) => {
     RequestAxios(getAite());
   }, []);
 
-  function handleClick() {
-    //여기서 룸 찾아서 id반환, 해당 주소로 넘김
+  useEffect(() => {
     function searchRoom() {
       const body = {
         users: Users,
       };
       axios.post("http://localhost:5000/room/search", body).then((res) => {
         if (res.data.room.length === 0) {
-          alert("에러입니다");
+          //alert("에러입니다");
         } else {
-          history.push(`/chat/${res.data.room[0].id}`);
+          // history.push(`/chat/${res.data.room[0].id}`);
+          setRoomInfo(res.data.room[0]);
         }
       });
     }
+    if (Users) {
+      searchRoom();
+    }
+  }, [Users]);
 
-    searchRoom();
+  function handleClick() {
+    //여기서 룸 찾아서 id반환, 해당 주소로 넘김
+    // function searchRoom() {
+    //   const body = {
+    //     users: Users,
+    //   };
+    //   axios.post("http://localhost:5000/room/search", body).then((res) => {
+    //     if (res.data.room.length === 0) {
+    //       alert("에러입니다");
+    //     } else {
+    //       history.push(`/chat/${res.data.room[0].id}`);
+    //       setRoomInfo(res.data.room[0].id);
+    //     }
+    //   });
+    // }
+
+    // searchRoom();
+    history.push(`/chat/${RoomInfo.id}`);
   }
   return (
     <div>
@@ -76,8 +98,11 @@ const ChatDetail = ({ data, history }) => {
           )}
           {Users ? (
             <div className="text-sm text-gray-600 align-middle mr-3">
-              {Users.aite.message}
+              {/* {Users.aite.message} */}
               {/* 이부분은 마지막메시지로 하고 */}
+              {RoomInfo.message
+                ? RoomInfo.message[RoomInfo.message.length - 1].message
+                : ""}
             </div>
           ) : (
             ""

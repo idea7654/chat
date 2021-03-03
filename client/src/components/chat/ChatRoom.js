@@ -8,7 +8,7 @@ import io from "socket.io-client";
 
 const ChatRoom = ({ history, match }) => {
   const [Users] = useContext(RoomContext);
-  const [onChange, Form] = useInputs();
+  const [onChange, Form, clear] = useInputs();
   const [MessageList, setMessageList] = useState([]);
   const socket = io.connect("http://localhost:5000");
   const focus = useRef(null);
@@ -22,6 +22,7 @@ const ChatRoom = ({ history, match }) => {
       message: Form.message,
       id: match.params.id,
     });
+    clear();
   }
   useEffect(() => {
     if (Users.aite === "") {

@@ -16,7 +16,7 @@ const ChatList = () => {
       <h2 className="flex flex-row items-center justify-between mt-2 mx-2">
         <span className="font-bold text-xl text-gray-900">채팅</span>
       </h2>
-      <div className="flex flex-col relative mt-4">
+      {/* <div className="flex flex-col relative mt-4">
         <div className="absolute flex items-center justify-center h-10 w-10 left-0 top-0">
           <svg
             className="h-6 w-6 text-gray-600"
@@ -36,7 +36,7 @@ const ChatList = () => {
             type="text"
           />
         </div>
-      </div>
+      </div> */}
       <ul
         className="flex flex-col mt-4 space-y-2 overflow-y-auto"
         style={{ height: "400px" }}

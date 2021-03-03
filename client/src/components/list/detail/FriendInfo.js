@@ -16,9 +16,30 @@ const FriendInfo = ({ setFriendModal, Friend, history }) => {
       user: User,
       friend: Friend,
     };
-    axios.post("http://localhost:5000/room/create", body).then((res) => {
-      history.push("/chat");
-    });
+    axios
+      .post("http://localhost:5000/room/create", body)
+      .then((res) => {
+        history.push("/chat");
+      })
+      .catch((err) => {
+        const body = {
+          users: {
+            user: {
+              nickname: User.nickname,
+            },
+            aite: {
+              nickname: Friend.nickname,
+            },
+          },
+        };
+        axios.post("http://localhost:5000/room/search", body).then((res) => {
+          if (res.data.room.length === 0) {
+            alert("에러입니다");
+          } else {
+            history.push(`/chat/${res.data.room[0].id}`);
+          }
+        });
+      });
   }
 
   return (
