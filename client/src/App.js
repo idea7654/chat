@@ -28,6 +28,7 @@ const App = ({ history }) => {
           history.push("/login");
         });
     }
+    console.log("작동");
   }, []);
   return (
     <div>

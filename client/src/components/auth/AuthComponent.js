@@ -41,6 +41,17 @@ const AuthComponent = ({ history, type }) => {
     const { token } = res.data;
     axios.defaults.headers.common["Authorization"] = token;
     window.sessionStorage.setItem("token", token);
+    axios
+      .get("http://localhost:5000/auth/check")
+      .then((res) => {
+        dispatch({
+          type: "SET_USER",
+          value: res.data.info,
+        });
+      })
+      .catch((err) => {
+        alert("에러입니다!");
+      });
   }
   return (
     <div>

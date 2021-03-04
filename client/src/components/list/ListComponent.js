@@ -10,21 +10,21 @@ const ListComponent = () => {
   function handleAdd() {
     setModal(true);
   }
-  const [onChange, Form, reset] = useInputs();
+  const [Form, reset] = useInputs();
 
-  function handleSearch(e) {
-    e.preventDefault();
-    axios
-      .get(
-        `http://localhost:5000/friend/?search=${encodeURIComponent(
-          Form.nickName
-        )}`
-      )
-      .then((res) => {
-        console.log(res);
-      });
-    reset();
-  }
+  // function handleSearch(e) {
+  //   e.preventDefault();
+  //   axios
+  //     .get(
+  //       `http://localhost:5000/friend/?search=${encodeURIComponent(
+  //         Form.nickName
+  //       )}`
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  //   reset();
+  // }
   return (
     <div>
       <h2 className="flex flex-row items-center justify-between mt-2 mx-2">
@@ -64,6 +64,7 @@ const ListComponent = () => {
         className="flex flex-col mt-4 space-y-2 overflow-y-auto"
         style={{ height: "400px" }}
       >
+        {console.log(User)}
         {User.friends
           ? User.friends.map((data, index) => {
               return <ListDetail key={index} data={data} />;

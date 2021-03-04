@@ -10,16 +10,18 @@ const ListDetail = ({ data }) => {
   }
   useEffect(() => {
     console.log(data);
-    axios
-      .get(
-        `http://localhost:5000/friend/?search=${encodeURIComponent(
-          data.nickName
-        )}`
-      )
-      .then((res) => {
-        setFriend(res.data.user);
-      });
-  }, []);
+    if (data) {
+      axios
+        .get(
+          `http://localhost:5000/friend/?search=${encodeURIComponent(
+            data.nickName
+          )}`
+        )
+        .then((res) => {
+          setFriend(res.data.user);
+        });
+    }
+  }, [data]);
   return (
     <li
       className="flex flex-row items-center relative bg-gray-200 hover:bg-gray-100 p-2 rounded"
