@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ListDetail from "./detail/ListDetail";
 import Modal from "./Modal";
 import UserContext from "../../context/UserContext";
@@ -6,25 +6,42 @@ import useInputs from "../../hooks/useInputs";
 import axios from "axios";
 const ListComponent = () => {
   const [User, dispatch] = useContext(UserContext);
+  const [List, setList] = useState([]);
   const [showModal, setModal] = useState(false);
   function handleAdd() {
     setModal(true);
   }
-  const [Form, reset] = useInputs();
-
-  // function handleSearch(e) {
-  //   e.preventDefault();
-  //   axios
-  //     .get(
-  //       `http://localhost:5000/friend/?search=${encodeURIComponent(
-  //         Form.nickName
-  //       )}`
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //     });
-  //   reset();
-  // }
+  const [onChange, Form, reset] = useInputs();
+  function handleSearch(e) {
+    e.preventDefault();
+    axios
+      .get(
+        `http://localhost:5000/friend/?search=${encodeURIComponent(
+          Form.nickname
+        )}`
+      )
+      .then((res) => {
+        if (
+          User.friends.findIndex(
+            (i) => i.nickname === res.data.user.nickname
+          ) !== -1
+        ) {
+          setList([res.data.user]);
+          // setList(List.filter((i) => i.nickname === res.data.user.nickname));
+        } else {
+          setList([]);
+        }
+      })
+      .catch((err) => {
+        setList([]);
+      });
+    reset();
+  }
+  useEffect(() => {
+    if (User) {
+      setList(User.friends);
+    }
+  }, [User]);
   return (
     <div>
       <h2 className="flex flex-row items-center justify-between mt-2 mx-2">
@@ -35,7 +52,7 @@ const ListComponent = () => {
           onClick={handleAdd}
         />
       </h2>
-      {/* <div className="flex flex-col relative mt-4">
+      <div className="flex flex-col relative mt-4">
         <div className="absolute flex items-center justify-center h-10 w-10 left-0 top-0">
           <svg
             className="h-6 w-6 text-gray-600"
@@ -54,19 +71,23 @@ const ListComponent = () => {
           <input
             className="pl-10 rounded h-10 w-full focus:outline-none bg-gray-200 focus:bg-gray-300"
             type="text"
-            value={Form.nickName}
+            value={Form.nickname}
             onChange={onChange}
-            name="nickName"
+            name="nickname"
           />
         </div>
-      </div> */}
+      </div>
       <ul
         className="flex flex-col mt-4 space-y-2 overflow-y-auto"
         style={{ height: "400px" }}
       >
-        {console.log(User)}
-        {User.friends
+        {/* {User.friends
           ? User.friends.map((data, index) => {
+              return <ListDetail key={index} data={data} />;
+            })
+          : ""} */}
+        {List
+          ? List.map((data, index) => {
               return <ListDetail key={index} data={data} />;
             })
           : ""}

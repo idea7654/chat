@@ -7,7 +7,7 @@ export interface RequestCustom extends Request {
 }
 
 function Register(req: Request, res: Response) {
-  const { email, password, nickName } = req.body;
+  const { email, password, nickname } = req.body;
   function create(user: any) {
     if (user) {
       throw new Error("email exists");
@@ -15,7 +15,7 @@ function Register(req: Request, res: Response) {
       return User.create({
         email: email,
         password: password,
-        nickname: nickName,
+        nickname: nickname,
       }).then((res) => {
         console.log(res);
       });
@@ -114,13 +114,13 @@ function update(req: RequestCustom, res: Response) {
   console.log(req.file, typeof (req.file as any).location);
   User.findOne({ _id: user._id }, (err: any, data: any) => {
     data.message = req.body.message;
-    data.nickname = req.body.nickName;
+    data.nickname = req.body.nickname;
     data.image = (req.file as any).location.toString();
     data.save();
   });
   return res.json({
     success: true,
-    nickname: req.body.nickName,
+    nickname: req.body.nickname,
     message: req.body.message,
     image: (req.file as any).location.toString(),
   });

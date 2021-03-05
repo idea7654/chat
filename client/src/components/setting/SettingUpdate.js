@@ -20,7 +20,7 @@ const SettingUpdate = ({ setUpdate }) => {
   }
   function handleUpdate() {
     let formData = new FormData();
-    formData.append("nickName", Form.nickName);
+    formData.append("nickname", Form.nickname);
     formData.append("message", Form.message);
     formData.append("img", Image);
     axios
@@ -31,7 +31,7 @@ const SettingUpdate = ({ setUpdate }) => {
         dispatch({
           type: "SET_USER",
           value: {
-            nickName: res.data.nickname,
+            nickname: res.data.nickname,
             message: res.data.message,
             image: res.data.fileName,
           },
@@ -57,9 +57,9 @@ const SettingUpdate = ({ setUpdate }) => {
             />
             <input
               type="text"
-              name="nickName"
+              name="nickname"
               className="font-bold border"
-              value={Form.nickName}
+              value={Form.nickname}
               onChange={onChange}
               placeholder={User.nickname}
             />

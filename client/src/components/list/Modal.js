@@ -20,12 +20,12 @@ const Modal = ({ setModal, dispatch }) => {
 
   function addFriend() {
     let body = {
-      nickName: Result.nickname,
+      nickname: Result.nickname,
     };
     axios.post("http://localhost:5000/friend", body).then((res) => {
       dispatch({
         type: "ADD_FRIEND",
-        value: res.data.user.friends[res.data.user.friends.length - 1].nickName,
+        value: res.data.user.friends[res.data.user.friends.length - 1].nickname,
       });
       setModal(false);
     });

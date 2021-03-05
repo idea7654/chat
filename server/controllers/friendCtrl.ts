@@ -5,12 +5,12 @@ export interface RequestCustom extends Request {
 }
 
 function addFriend(req: RequestCustom, res: Response) {
-  const { nickName } = req.body;
+  const { nickname } = req.body;
   const user = req.decoded;
   function submit(user: any) {
-    if (user.friends.findIndex((i: any) => i.nickName === nickName)) {
+    if (user.friends.findIndex((i: any) => i.nickname === nickname)) {
       user.friends.push({
-        nickName: nickName,
+        nickname: nickname,
       });
       return user.save();
     } else {
@@ -40,7 +40,7 @@ function addFriend(req: RequestCustom, res: Response) {
 }
 
 function friendSearch(req: Request, res: Response) {
-  const nickName: any = decodeURIComponent(req.query.search as any);
+  const nickname: any = decodeURIComponent(req.query.search as any);
   function search(user: any) {
     if (user) {
       return res.json({
@@ -59,7 +59,7 @@ function friendSearch(req: Request, res: Response) {
   }
 
   User.findOne({
-    nickname: nickName,
+    nickname: nickname,
   })
     .then(search)
     .catch(onError);

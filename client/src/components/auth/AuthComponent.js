@@ -24,7 +24,7 @@ const AuthComponent = ({ history, type }) => {
       let body = {
         email: Form.email,
         password: Form.password,
-        nickName: Form.nickName,
+        nickname: Form.nickname,
       };
       axios
         .post("http://localhost:5000/auth/register", body)
@@ -90,15 +90,15 @@ const AuthComponent = ({ history, type }) => {
         ""
       ) : (
         <div className="mb-4">
-          <label className="block text-md font-light mb-2" htmlFor="nickName">
+          <label className="block text-md font-light mb-2" htmlFor="nickname">
             Nickname
           </label>
           <input
             className="w-full bg-drabya-gray border-gray-500 appearance-none border p-4 font-light leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            name="nickName"
+            name="nickname"
             placeholder="Password"
-            value={Form.nickName}
+            value={Form.nickname}
             onChange={onChange}
           />
         </div>

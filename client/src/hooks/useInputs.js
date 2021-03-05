@@ -4,7 +4,7 @@ const useInputs = () => {
   const [Form, setForm] = useState({
     email: "",
     password: "",
-    nickName: "",
+    nickname: "",
     message: "",
   });
 
@@ -17,7 +17,7 @@ const useInputs = () => {
     setForm({
       email: "",
       password: "",
-      nickName: "",
+      nickname: "",
       message: "",
     });
   }

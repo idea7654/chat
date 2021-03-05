@@ -5,7 +5,7 @@ function UserReducer(state, action) {
     case "ADD_FRIEND":
       return {
         ...state,
-        friends: [...state.friends, { nickName: action.value }],
+        friends: [...state.friends, { nickname: action.value }],
       };
     default:
       return state;

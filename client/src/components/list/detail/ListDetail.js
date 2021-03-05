@@ -9,15 +9,15 @@ const ListDetail = ({ data }) => {
     setFriendModal(true);
   }
   useEffect(() => {
-    console.log(data);
     if (data) {
       axios
         .get(
           `http://localhost:5000/friend/?search=${encodeURIComponent(
-            data.nickName
+            data.nickname
           )}`
         )
         .then((res) => {
+          //console.log(res);
           setFriend(res.data.user);
         });
     }
@@ -39,7 +39,7 @@ const ListDetail = ({ data }) => {
         </div>
       </div>
       <div className="w-full flex justify-between">
-        <h3 className="font-bold align-middle">{data.nickName}</h3>
+        <h3 className="font-bold align-middle">{data.nickname}</h3>
         <div className="text-sm text-gray-600 align-middle mr-3">
           {Friend ? Friend.message : ""}
         </div>
