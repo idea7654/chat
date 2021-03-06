@@ -1,15 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import UserContext from "@Context/UserContext";
 import ChatDetail from "./ChatDetail";
+import useAxios from "../../hooks/useAxios";
 const ChatList = () => {
   const [Room, setRoom] = useState(null);
   const [User] = useContext(UserContext);
+  const { getAxios, Response } = useAxios();
+  // useEffect(() => {
+  //   axios.get("http://localhost:5000/room").then((res) => {
+  //     setRoom(res.data.room);
+  //   });
+  //   console.log("작동");
+  // }, [User]);
+
   useEffect(() => {
-    axios.get("http://localhost:5000/room").then((res) => {
-      setRoom(res.data.room);
-    });
+    if (User.nickname) {
+      getAxios("http://localhost:5000/room");
+    }
   }, [User]);
+
+  useEffect(() => {
+    if (Response !== "") {
+      setRoom(Response.room);
+    }
+    return () => {
+      Response;
+    };
+  }, [Response]);
 
   return (
     <div>

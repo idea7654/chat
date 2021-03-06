@@ -1,27 +1,33 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import FriendInfo from "./FriendInfo";
-import axios from "axios";
+import useAxios from "../../../hooks/useAxios";
+
 const ListDetail = ({ data }) => {
   const [FriendModal, setFriendModal] = useState(false);
   const [Friend, setFriend] = useState(null);
+  const { getAxios, Response } = useAxios();
   function handleClick(e) {
     e.stopPropagation();
     setFriendModal(true);
   }
   useEffect(() => {
     if (data) {
-      axios
-        .get(
-          `http://localhost:5000/friend/?search=${encodeURIComponent(
-            data.nickname
-          )}`
-        )
-        .then((res) => {
-          //console.log(res);
-          setFriend(res.data.user);
-        });
+      getAxios(
+        `http://localhost:5000/friend/?search=${encodeURIComponent(
+          data.nickname
+        )}`
+      );
     }
   }, [data]);
+
+  useEffect(() => {
+    if (Response !== "") {
+      setFriend(Response.user);
+    }
+    return () => {
+      Response;
+    };
+  }, [Response]);
   return (
     <li
       className="flex flex-row items-center relative bg-gray-200 hover:bg-gray-100 p-2 rounded"
