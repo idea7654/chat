@@ -65,4 +65,32 @@ function friendSearch(req: Request, res: Response) {
     .catch(onError);
 }
 
-export { addFriend, friendSearch };
+function searchManyFriends(req: RequestCustom, res: Response) {
+  const nickname: any = decodeURIComponent(req.query.search as any);
+  async function search(user: any) {
+    if (user.length !== 0) {
+      res.json({
+        user,
+      });
+    } else {
+      throw new Error("없는 유저입니다!");
+    }
+  }
+
+  function onError(err: any) {
+    res.status(409).json({
+      success: false,
+      message: err,
+    });
+  }
+
+  User.find({
+    nickname: {
+      $regex: nickname,
+    },
+  })
+    .then(search)
+    .catch(onError);
+}
+
+export { addFriend, friendSearch, searchManyFriends };

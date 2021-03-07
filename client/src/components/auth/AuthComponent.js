@@ -6,7 +6,7 @@ import UserContext from "@Context/UserContext";
 const AuthComponent = ({ history, type }) => {
   const [User, dispatch] = useContext(UserContext);
   const [onChange, Form] = useInputs();
-  function handleSubmit() {
+  async function handleSubmit() {
     if (type === "login") {
       let body = {
         email: Form.email,

@@ -12,25 +12,27 @@ const ListComponent = () => {
     setModal(true);
   }
   const [onChange, Form, reset] = useInputs();
+  function checkArr(arr1, arr2) {
+    let returnArr = [];
+    arr1.forEach((data) => {
+      arr2.forEach((data2) => {
+        if (data.nickname === data2.nickname) {
+          returnArr.push(data);
+        }
+      });
+    });
+    return returnArr;
+  }
   function handleSearch(e) {
     e.preventDefault();
     axios
       .get(
-        `http://localhost:5000/friend/?search=${encodeURIComponent(
+        `http://localhost:5000/friend/search/?search=${encodeURIComponent(
           Form.nickname
         )}`
       )
       .then((res) => {
-        if (
-          User.friends.findIndex(
-            (i) => i.nickname === res.data.user.nickname
-          ) !== -1
-        ) {
-          setList([res.data.user]);
-          // setList(List.filter((i) => i.nickname === res.data.user.nickname));
-        } else {
-          setList([]);
-        }
+        setList(checkArr(User.friends, res.data.user));
       })
       .catch((err) => {
         setList([]);
