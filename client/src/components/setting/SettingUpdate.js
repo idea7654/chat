@@ -28,12 +28,13 @@ const SettingUpdate = ({ setUpdate }) => {
         header: { "content-type": "multipart/form-data" },
       })
       .then((res) => {
+        console.log(res);
         dispatch({
           type: "SET_USER",
           value: {
             nickname: res.data.nickname,
             message: res.data.message,
-            image: res.data.fileName,
+            image: res.data.image,
           },
         });
       });

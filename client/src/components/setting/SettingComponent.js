@@ -9,6 +9,7 @@ const SettingComponent = ({ setUpdate, history }) => {
     window.sessionStorage.setItem("token", "");
     history.push("/");
   }
+  console.log(User);
   return (
     <div>
       <div className="flex justify-between">
