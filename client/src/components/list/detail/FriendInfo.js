@@ -34,7 +34,7 @@ const FriendInfo = ({ setFriendModal, Friend, history }) => {
         };
         axios.post("http://localhost:5000/room/search", body).then((res) => {
           if (res.data.room.length === 0) {
-            alert("에러입니다");
+            alert("エラーです");
           } else {
             history.push(`/chat/${res.data.room[0].id}`);
           }
@@ -50,7 +50,6 @@ const FriendInfo = ({ setFriendModal, Friend, history }) => {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/*header*/}
             <div className="flex items-start justify-between p-5 border-solid border-gray-300 rounded-t">
-              {/* <h3 className="text-3xl font-semibold">친구추가</h3> */}
               <button
                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                 onClick={handleClick}
@@ -61,7 +60,7 @@ const FriendInfo = ({ setFriendModal, Friend, history }) => {
               </button>
             </div>
             {/*body*/}
-            <div className="w-screen">
+            <div className="w-full">
               <div className="flex flex-col">
                 <div className="flex justify-center">
                   <div className="relative flex-shrink-0">

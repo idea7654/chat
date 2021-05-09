@@ -104,7 +104,7 @@ async function search(req: Request, res: Response) {
     });
   } else {
     res.status(403).json({
-      message: "유저를 찾을 수 없습니다",
+      message: "ユーザーを探せません",
     });
   }
 }

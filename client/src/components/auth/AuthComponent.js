@@ -17,7 +17,7 @@ const AuthComponent = ({ history, type }) => {
         .then(onLoginSuccess)
         .then(history.push("/"))
         .catch((err) => {
-          alert("없는 유저입니다");
+          alert("ユーザーが存在しません");
           console.log(err);
         });
     } else {
@@ -32,7 +32,7 @@ const AuthComponent = ({ history, type }) => {
           history.push("/login");
         })
         .catch((err) => {
-          alert("오류입니다!!");
+          alert("エラーです");
         });
     }
   }
@@ -50,14 +50,14 @@ const AuthComponent = ({ history, type }) => {
         });
       })
       .catch((err) => {
-        alert("에러입니다!");
+        alert("エラーです");
       });
   }
   return (
     <div>
       <h2 className="flex flex-row items-center justify-between mt-2">
         <span className="font-bold text-xl text-gray-900">
-          {type === "login" ? "로그인" : "회원가입"}
+          {type === "login" ? "ログイン" : "会員登録"}
         </span>
       </h2>
       <div className="mb-4">

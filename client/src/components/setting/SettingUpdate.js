@@ -40,6 +40,8 @@ const SettingUpdate = ({ setUpdate }) => {
       });
     setUpdate(false);
   }
+  //axios.get(url);
+  //axios.post(url, body);
   return (
     <div>
       <div className="flex justify-between">
@@ -80,7 +82,7 @@ const SettingUpdate = ({ setUpdate }) => {
             type="button"
             onClick={handleUpdate}
           >
-            수정
+            修正
           </button>
         </div>
       </div>

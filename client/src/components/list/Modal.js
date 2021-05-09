@@ -14,7 +14,7 @@ const Modal = ({ setModal, dispatch }) => {
         setResult(res.data.user);
       })
       .catch((err) => {
-        alert("없는 유저입니다!");
+        alert("ユーザーが存在しません");
       });
   }
 
@@ -38,7 +38,7 @@ const Modal = ({ setModal, dispatch }) => {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/*header*/}
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-              <h3 className="text-3xl font-semibold">친구추가</h3>
+              <h3 className="text-3xl font-semibold">フレンド追加</h3>
               <button
                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                 onClick={() => setModal(false)}
@@ -51,9 +51,9 @@ const Modal = ({ setModal, dispatch }) => {
             {/*body*/}
             <div className="relative p-6 flex-auto w-screen">
               <input
-                className="w-full"
+                className="w-1/2"
                 type="text"
-                placeholder="친구 이메일을 입력하세요"
+                placeholder="フレンドのEmailを入力してください"
                 name="email"
                 value={Form.email}
                 onChange={onChange}
@@ -65,7 +65,7 @@ const Modal = ({ setModal, dispatch }) => {
                 type="button"
                 onClick={handleSearch}
               >
-                찾기
+                探す
               </button>
             </div>
             <ul>
@@ -77,7 +77,7 @@ const Modal = ({ setModal, dispatch }) => {
                     type="button"
                     onClick={addFriend}
                   >
-                    추가
+                    追加
                   </button>
                 </li>
               ) : (

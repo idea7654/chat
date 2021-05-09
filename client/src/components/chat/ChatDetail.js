@@ -7,68 +7,53 @@ import { withRouter } from "react-router-dom";
 const ChatDetail = ({ data, history }) => {
   const [User] = useContext(UserContext);
   const [Users, dispatch] = useContext(RoomContext);
-  const [RoomInfo, setRoomInfo] = useState("");
+  const [AiteInfo, setAiteInfo] = useState("");
   useEffect(() => {
     function getAite() {
-      const aite = data.users.filter((data) => data !== User.nickname);
+      const aite = data.users.filter((data) => data != User.nickname);
       return aite;
     }
     function RequestAxios(aite) {
       axios
         .get(`http://localhost:5000/friend/?search=${encodeURIComponent(aite)}`)
         .then((res) => {
-          dispatch({
-            type: "SET_USERS",
-            value: res.data.user,
-            name: "aite",
-          });
+          setAiteInfo(res.data.user);
         });
-      dispatch({
-        type: "SET_USERS",
-        value: User,
-        name: "user",
-      });
     }
     RequestAxios(getAite());
   }, []);
 
-  useEffect(() => {
+  function handleClick() {
+    //ここでルームを探してIDを得る、そのURLでリダイレクト
     function searchRoom() {
       const body = {
-        users: Users,
+        users: {
+          user: User,
+          aite: AiteInfo,
+        },
       };
+      console.log(body);
       axios.post("http://localhost:5000/room/search", body).then((res) => {
         if (res.data.room.length === 0) {
-          //alert("에러입니다");
+          alert("エラーです");
         } else {
-          // history.push(`/chat/${res.data.room[0].id}`);
-          setRoomInfo(res.data.room[0]);
+          dispatch({
+            type: "SET_USERS",
+            value: AiteInfo,
+            name: "aite",
+          });
+          dispatch({
+            type: "SET_USERS",
+            value: User,
+            name: "user",
+          });
+          history.push(`/chat/${res.data.room[0].id}`);
         }
       });
     }
-    if (Users) {
-      searchRoom();
-    }
-  }, [Users]);
 
-  function handleClick() {
-    //여기서 룸 찾아서 id반환, 해당 주소로 넘김
-    // function searchRoom() {
-    //   const body = {
-    //     users: Users,
-    //   };
-    //   axios.post("http://localhost:5000/room/search", body).then((res) => {
-    //     if (res.data.room.length === 0) {
-    //       alert("에러입니다");
-    //     } else {
-    //       history.push(`/chat/${res.data.room[0].id}`);
-    //       setRoomInfo(res.data.room[0].id);
-    //     }
-    //   });
-    // }
-
-    // searchRoom();
-    history.push(`/chat/${RoomInfo.id}`);
+    searchRoom();
+    //history.push(`/chat/${RoomInfo.id}`);
   }
   return (
     <div>
@@ -79,9 +64,9 @@ const ChatDetail = ({ data, history }) => {
         <div className="ml-1">
           <div className="relative flex-shrink-0">
             <a className="flex rounded-full w-12 h-12 mr-3">
-              {Users.aite.image ? (
+              {AiteInfo.image ? (
                 <img
-                  src={Users.aite.image}
+                  src={AiteInfo.image}
                   className="w-full h-full rounded-full"
                 />
               ) : (
@@ -91,22 +76,16 @@ const ChatDetail = ({ data, history }) => {
           </div>
         </div>
         <div className="w-full flex justify-between">
-          {Users ? (
-            <h3 className="font-bold align-middle">{Users.aite.nickname}</h3>
+          {AiteInfo ? (
+            <h3 className="font-bold align-middle">{AiteInfo.nickname}</h3>
           ) : (
             ""
           )}
-          {Users ? (
-            <div className="text-sm text-gray-600 align-middle mr-3">
-              {/* {Users.aite.message} */}
-              {/* 이부분은 마지막메시지로 하고 */}
-              {RoomInfo.message
-                ? RoomInfo.message[RoomInfo.message.length - 1].message
-                : ""}
-            </div>
-          ) : (
-            ""
-          )}
+          {data
+            ? data.message.length == 0
+              ? ""
+              : data.message[data.message.length - 1].message
+            : ""}
         </div>
       </li>
     </div>

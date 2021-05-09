@@ -83,11 +83,6 @@ const ListComponent = () => {
         className="flex flex-col mt-4 space-y-2 overflow-y-auto"
         style={{ height: "400px" }}
       >
-        {/* {User.friends
-          ? User.friends.map((data, index) => {
-              return <ListDetail key={index} data={data} />;
-            })
-          : ""} */}
         {List
           ? List.map((data, index) => {
               return <ListDetail key={index} data={data} />;

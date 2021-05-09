@@ -6,11 +6,10 @@ export interface RequestCustom extends Request {
 }
 
 function createRoom(req: RequestCustom, res: Response) {
-  console.log(req.body);
   function create(room: any) {
     console.log(room);
     if (room.length !== 0) {
-      throw new Error("이미 존재하는 채팅방입니다!");
+      throw new Error("既にチャットルームがあります");
     } else {
       return Room.create({
         users: [req.body.user.nickname, req.body.friend.nickname],
@@ -53,7 +52,7 @@ function getRoom(req: RequestCustom, res: Response) {
         users: { $in: [user.nickname] },
       });
     } else {
-      throw new Error("없는 유저입니다!");
+      throw new Error("ユーザーが存在しません");
     }
   }
 

@@ -64,14 +64,14 @@ const ChatRoom = ({ history, match }) => {
               d="M9.41 11H17a1 1 0 0 1 0 2H9.41l2.3 2.3a1 1 0 1 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L9.4 11z"
             />
           </svg>
-          <div className="my-3 pr-12 text-green-100 font-bold text-lg tracking-wide">
+          <div className="my-3 pr-12 pt-3 text-green-100 font-bold text-lg tracking-wide">
             {Users.aite.nickname}
           </div>
           <div></div>
         </div>
         <div
+          className="overflow-auto w-full h-full mb-16"
           style={{ height: "55vh" }}
-          className="w-full h-full mb-16 overflow-auto"
           ref={focus}
         >
           {MessageList.map((data, index) => {
@@ -83,8 +83,10 @@ const ChatRoom = ({ history, match }) => {
               }
             }
             if (data.name === Users.user.nickname) {
+              console.log(data);
               return <UserChat key={index} data={data} />;
             } else {
+              console.log(data);
               return <FriendChat key={index} data={data} />;
             }
           })}

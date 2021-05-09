@@ -15,7 +15,7 @@ function addFriend(req: RequestCustom, res: Response) {
       return user.save();
     } else {
       res.status(403).json({
-        message: "이미 등록된 친구입니다!",
+        message: "既に登録済みのフレンドです",
       });
     }
   }
@@ -47,7 +47,7 @@ function friendSearch(req: Request, res: Response) {
         user,
       });
     } else {
-      throw new Error("없는 유저입니다!");
+      throw new Error("ユーザーが存在しません");
     }
   }
 
@@ -73,7 +73,7 @@ function searchManyFriends(req: RequestCustom, res: Response) {
         user,
       });
     } else {
-      throw new Error("없는 유저입니다!");
+      throw new Error("ユーザーが存在しません");
     }
   }
 

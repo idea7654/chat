@@ -9,7 +9,6 @@ const SettingComponent = ({ setUpdate, history }) => {
     window.sessionStorage.setItem("token", "");
     history.push("/");
   }
-  console.log(User);
   return (
     <div>
       <div className="flex justify-between">
@@ -30,7 +29,7 @@ const SettingComponent = ({ setUpdate, history }) => {
             type="button"
             onClick={() => setUpdate(true)}
           >
-            편집
+            編集
           </button>
         </div>
       </div>
@@ -39,7 +38,7 @@ const SettingComponent = ({ setUpdate, history }) => {
         type="button"
         onClick={handleLogout}
       >
-        로그아웃
+        ログアウト
       </button>
     </div>
   );
